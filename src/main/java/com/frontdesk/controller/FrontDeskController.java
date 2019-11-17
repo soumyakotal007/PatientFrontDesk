@@ -17,7 +17,7 @@ public class FrontDeskController {
 
 	@Autowired
 	FrontDeskService frontDeskService;
-
+	
 	/**
 	 * http://localhost:7778/getSpecialist?hospitalId=946&specialistType=Dentist
 	 * 
