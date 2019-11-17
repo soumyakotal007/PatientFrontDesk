@@ -13,5 +13,4 @@ public class PatientFrontDeskApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(PatientFrontDeskApplication.class, args);
 	}
-
 }

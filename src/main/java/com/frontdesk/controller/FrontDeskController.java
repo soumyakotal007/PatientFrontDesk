@@ -19,20 +19,25 @@ public class FrontDeskController {
 	FrontDeskService frontDeskService;
 
 	/**
-	 * http://localhost:7778/getSpecialist?hospitalName=946&specialistType=Dentist
+	 * http://localhost:7778/getSpecialist?hospitalId=946&specialistType=Dentist
+	 * 
 	 * @param hospitalName
 	 * @param specialistType
 	 * @return
 	 * @throws JsonProcessingException
 	 * @throws SpecialistNotFoundException
 	 */
-	@GetMapping(path="${specialist.list.get.url}", produces = {MediaType.APPLICATION_JSON_VALUE, 
-            MediaType.APPLICATION_XML_VALUE})
-	public Spcialists getSpecialistList(@RequestParam("hospitalName") String hospitalName,
+	@GetMapping(path = "${specialist.list.get.url}", headers = "Accept=*/*", produces = {
+			MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE })
+	public Spcialists getSpecialistList(@RequestParam("hospitalId") String hospitalName,
 			@RequestParam("specialistType") String specialistType)
-			throws JsonProcessingException, SpecialistNotFoundException,FrontDeskGeneralException {
-		Spcialists specialists = new Spcialists();
-		specialists.setSpecialistList(frontDeskService.getSpecialistList(hospitalName, specialistType));
-		return specialists;
+			throws JsonProcessingException, SpecialistNotFoundException, FrontDeskGeneralException {
+		try {
+			Spcialists specialists = new Spcialists();
+			specialists.setSpecialistList(frontDeskService.getSpecialistList(hospitalName, specialistType));
+			return specialists;
+		} catch (Exception ex) {
+			throw new FrontDeskGeneralException(ex.getMessage());
+		}
 	}
 }

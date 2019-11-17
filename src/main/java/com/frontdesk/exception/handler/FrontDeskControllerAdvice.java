@@ -1,5 +1,7 @@
 package com.frontdesk.exception.handler;
 
+import java.net.URISyntaxException;
+
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpStatus;
@@ -25,7 +27,8 @@ public class FrontDeskControllerAdvice {
 	@Value("${exception.general.code}")
 	private int exceptionGeneralCode;
 	
-	
+	@Value("${exception.uri.syntex.code}")
+	private int exceptionUriCode;
 
 	@ExceptionHandler(JsonProcessingException.class)
 	public ResponseEntity<ExceptionDTO> jsonException(JsonProcessingException ex)
@@ -53,5 +56,14 @@ public class FrontDeskControllerAdvice {
 		dto.setExceptionMessage(ex.getMessage());
 		return new ResponseEntity<ExceptionDTO>(dto, HttpStatus.INTERNAL_SERVER_ERROR);
 	}
+	@ExceptionHandler(URISyntaxException.class)
+	public ResponseEntity<ExceptionDTO> urlSyntaxException(URISyntaxException ex)
+	{
+		ExceptionDTO dto = new ExceptionDTO();
+		dto.setExceptionID(exceptionUriCode);
+		dto.setExceptionMessage(ex.getMessage());
+		return new ResponseEntity<ExceptionDTO>(dto, HttpStatus.INTERNAL_SERVER_ERROR);
+	}
+	
 	
 }
