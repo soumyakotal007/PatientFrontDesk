@@ -1,5 +1,6 @@
 package com.frontdesk.util;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -63,6 +64,10 @@ public class FrontDeskCacheUtil {
 			allPatientList = new ObjectMapper().readValue(patientDetail, new TypeReference<List<PatientInfoDTO>>() {
 			});
 			cacheData.put(ALL_PATIENT_KEY, allPatientList);
+		}
+		else
+		{
+			cacheData.put(ALL_PATIENT_KEY, new ArrayList<PatientInfoDTO>());
 		}
 	}
 
