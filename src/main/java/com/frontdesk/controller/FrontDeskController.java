@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.frontdesk.dto.AppointmentDTO;
 import com.frontdesk.dto.HospitalInfoDTO;
+import com.frontdesk.dto.PatientInfoDTO;
 import com.frontdesk.dto.Spcialists;
 import com.frontdesk.exception.FrontDeskGeneralException;
 import com.frontdesk.exception.SpecialistNotFoundException;
@@ -66,9 +67,22 @@ public class FrontDeskController {
 	 * @param hospitalID
 	 * @return
 	 * @throws FrontDeskGeneralException
+	 * @throws JsonProcessingException 
 	 */
 	@GetMapping(path = "${hospital.no.bed.url}" , produces = {MediaType.APPLICATION_JSON_VALUE})
-	public List<HospitalInfoDTO> getHospitalBedInfo(@RequestParam("HospitalID") String hospitalID) throws FrontDeskGeneralException {
+	public List<HospitalInfoDTO> getHospitalBedInfo(@RequestParam("HospitalID") String hospitalID) throws FrontDeskGeneralException, JsonProcessingException {
 		return frontDeskService.getHospitalBedInfo(hospitalID);
+	}
+	
+	/**
+	 * http://localhost:7778/getPatientDetails
+	 * @param hospitalID
+	 * @return
+	 * @throws FrontDeskGeneralException
+	 * @throws JsonProcessingException 
+	 */
+	@GetMapping(path = "${patient.details.url}" , produces = {MediaType.APPLICATION_JSON_VALUE})
+	public List<PatientInfoDTO> getPatientdetails(){
+		return frontDeskService.getPatientdetails();
 	}
 }

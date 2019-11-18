@@ -10,6 +10,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.frontdesk.dao.FrontDeskDAO;
 import com.frontdesk.dto.AppointmentDTO;
 import com.frontdesk.dto.HospitalInfoDTO;
+import com.frontdesk.dto.PatientInfoDTO;
 import com.frontdesk.dto.SpecialistDTO;
 import com.frontdesk.exception.FrontDeskGeneralException;
 import com.frontdesk.exception.SpecialistNotFoundException;
@@ -31,8 +32,12 @@ public class FrontDeskService {
 		return frontDeskDAO.getSpecialistList(specialistName , appointmentDay , patientName, hospitalID);
 	}
 	
-	public List<HospitalInfoDTO> getHospitalBedInfo(String hospitalID) throws FrontDeskGeneralException
+	public List<HospitalInfoDTO> getHospitalBedInfo(String hospitalID) throws FrontDeskGeneralException, JsonProcessingException
 	{
 		return frontDeskDAO.getHospitalBedInfo(hospitalID);
+	}
+	public List<PatientInfoDTO> getPatientdetails()
+	{
+		return frontDeskDAO.getPatientdetails();
 	}
 }

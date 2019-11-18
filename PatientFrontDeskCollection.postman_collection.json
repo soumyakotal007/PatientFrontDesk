@@ -1,0 +1,161 @@
+{
+	"info": {
+		"_postman_id": "bd8e6fdd-e62c-404d-99da-6f5899b84410",
+		"name": "PatientFrontDeskCollection",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "GetSpecialistList - JSON",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:7778/getSpecialist?hospitalId=946&specialistType=Dentist",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "7778",
+					"path": [
+						"getSpecialist"
+					],
+					"query": [
+						{
+							"key": "hospitalId",
+							"value": "946"
+						},
+						{
+							"key": "specialistType",
+							"value": "Dentist"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GetSpecialistList - XML",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/xml",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:7778/getSpecialist?hospitalId=946&specialistType=Dentist",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "7778",
+					"path": [
+						"getSpecialist"
+					],
+					"query": [
+						{
+							"key": "hospitalId",
+							"value": "946"
+						},
+						{
+							"key": "specialistType",
+							"value": "Dentist"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "BookAppointment",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:7778/bookAppointment?SpecialistName=sandhya&AppointmentDay=Monday&PatientName=Soumya&HospitalId=946",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "7778",
+					"path": [
+						"bookAppointment"
+					],
+					"query": [
+						{
+							"key": "SpecialistName",
+							"value": "sandhya"
+						},
+						{
+							"key": "AppointmentDay",
+							"value": "Monday"
+						},
+						{
+							"key": "PatientName",
+							"value": "Soumya"
+						},
+						{
+							"key": "HospitalId",
+							"value": "946"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "PatientDetails",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:7778/getPatientDetails",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "7778",
+					"path": [
+						"getPatientDetails"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GetHospitalBedInfo",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:7778/getHospitalBedInfo?HospitalID=946",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "7778",
+					"path": [
+						"getHospitalBedInfo"
+					],
+					"query": [
+						{
+							"key": "HospitalID",
+							"value": "946"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"protocolProfileBehavior": {}
+}

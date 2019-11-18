@@ -10,6 +10,7 @@ import org.springframework.stereotype.Repository;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.frontdesk.dto.AppointmentDTO;
 import com.frontdesk.dto.HospitalInfoDTO;
@@ -62,8 +63,7 @@ public class FrontDeskDAO {
 			if(hospitalIndex != -1)
 			{
 				hospitalInfoDTO = util.getAllHospitalList().get(hospitalIndex);
-				setHospitalBed(hospitalInfoDTO);
-				if(hospitalInfoDTO.getBedNo() > 0)
+				if(getHospitalBed(hospitalInfoDTO) > 0)
 				{
 					AppointmentDTO appointmentDTO = new AppointmentDTO();
 					appointmentDTO.setSpecialistName(specialistName);
@@ -98,13 +98,16 @@ public class FrontDeskDAO {
 		
 	}
 	
-	public synchronized List<HospitalInfoDTO> getHospitalBedInfo(String hospitalID) throws FrontDeskGeneralException
+	public synchronized List<HospitalInfoDTO> getHospitalBedInfo(String hospitalID) throws FrontDeskGeneralException, JsonProcessingException
 	{
-		List<HospitalInfoDTO> hospitalDetails = new ArrayList<>(util.getAllHospitalList().stream().filter(o -> o.getHospitalId().equals(hospitalID)).collect(Collectors.toList()));
-		if(hospitalDetails != null && !hospitalDetails.isEmpty())
+		ObjectMapper mapper = new ObjectMapper();
+		List<HospitalInfoDTO> hospitalDetailsOriginal = util.getAllHospitalList().stream().filter(o -> o.getHospitalId().equals(hospitalID)).collect(Collectors.toList());
+		List<HospitalInfoDTO> hospitalDetailsDeepClone = mapper.readValue(mapper.writeValueAsString(hospitalDetailsOriginal) , new TypeReference<List<HospitalInfoDTO>>() {
+		} );
+		if(hospitalDetailsDeepClone != null && !hospitalDetailsDeepClone.isEmpty())
 		{
-			hospitalDetails.stream().forEach(o -> setHospitalBed(o));
-			return hospitalDetails;
+			hospitalDetailsDeepClone.stream().forEach(o -> setHospitalBed(o));
+			return hospitalDetailsDeepClone;
 		}
 		else
 		{
@@ -116,5 +119,15 @@ public class FrontDeskDAO {
 	{
 		int occupiedBed = util.getAllPatientList().stream().filter(o -> o.getAppointmentDay().equals(dto.getAvailableday()) && !o.getAdmitStatus().equals("DISCHARGE")).collect(Collectors.toList()).size();
 		dto.setBedNo(dto.getBedNo() - occupiedBed);
+	}
+	
+	private int getHospitalBed(HospitalInfoDTO dto)
+	{
+		return dto.getBedNo() - util.getAllPatientList().stream().filter(o -> o.getAppointmentDay().equals(dto.getAvailableday()) && !o.getAdmitStatus().equals("DISCHARGE")).collect(Collectors.toList()).size();
+	}
+	
+	public List<PatientInfoDTO> getPatientdetails()
+	{
+		return util.getAllPatientList();
 	}
 }
